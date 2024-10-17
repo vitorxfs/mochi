@@ -1,11 +1,13 @@
 package com.vitorsanches.mochi.modules.anime;
 
 import com.vitorsanches.mochi.modules.genre.Genre;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Root;
+import com.vitorsanches.mochi.utils.CriteriaUtils;
+import jakarta.persistence.criteria.*;
+import jakarta.persistence.metamodel.SingularAttribute;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.management.Attribute;
+import java.util.HashSet;
 import java.util.Set;
 
 public class AnimeSpecification {
@@ -13,7 +15,7 @@ public class AnimeSpecification {
         return Specification
                 .where(byName(filters.getName()))
                 .and(byMinScore(filters.getMinScore()))
-                .and(byGenres(filters.getGenreId()));
+                .and(byGenres(filters.getGenreIds()));
     }
 
     private static Specification<Anime> byName(String name) {
@@ -28,9 +30,20 @@ public class AnimeSpecification {
                 : cb.greaterThanOrEqualTo(root.get("score"), score);
     }
 
-    private static Specification<Anime> byGenres(Integer genreId) {
-        return (root, query, cb) -> genreId == null || genreId <= 0
-                ? cb.conjunction()
-                : cb.equal(root.get("genres").get("id"), genreId);
+    private static Specification<Anime> byGenres(Set<Integer> genreIds) {
+        return (root, query, cb) -> {
+            if (genreIds == null || genreIds.isEmpty()) {
+                return cb.conjunction();
+            }
+
+            Join<Anime, ?> join = CriteriaUtils.getJoin(root, "genres", JoinType.INNER);
+
+            assert query != null;
+            query.groupBy(root.get("id")).having(cb.equal(cb.count(join), genreIds.size()));
+
+            return join.get("id").in(genreIds);
+        };
     }
+
+
 }

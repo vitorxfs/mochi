@@ -14,5 +14,6 @@ import java.util.Set;
 public class AnimeListFilters {
     private String name;
     private Double minScore;
-    private Integer genreId;
+//    private Integer genreId;
+    private Set<Integer> genreIds;
 }
