@@ -16,8 +16,8 @@ public class AnimeController {
     private final AnimeService animeService;
 
     @GetMapping
-    ResponseEntity<Page<Anime>> list(Pageable pageable) {
-        return new ResponseEntity<Page<Anime>>(animeService.list(pageable), HttpStatus.OK);
+    ResponseEntity<Page<Anime>> list(Pageable pageable, AnimeListFilters filters) {
+        return new ResponseEntity<Page<Anime>>(animeService.list(pageable, filters), HttpStatus.OK);
     }
 
     @PostMapping

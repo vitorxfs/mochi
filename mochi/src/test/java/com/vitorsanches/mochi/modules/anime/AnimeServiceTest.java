@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -37,16 +38,30 @@ class AnimeServiceTest {
     void setUp() {
         PageImpl<Anime> animePage = new PageImpl<>(List.of(AnimeCreator.createValidAnime()));
         BDDMockito.when(animeRepository.findAll(ArgumentMatchers.any(PageRequest.class))).thenReturn(animePage);
+        BDDMockito.when(animeRepository.findAll(
+                ArgumentMatchers.any(Specification.class), ArgumentMatchers.any(PageRequest.class)))
+                .thenReturn(animePage);
         BDDMockito.when(animeRepository.save(ArgumentMatchers.any(Anime.class)))
                 .thenReturn(AnimeCreator.createValidAnime());
         BDDMockito.when(genreService.findById(ArgumentMatchers.any(Long.class)))
                 .thenReturn(Optional.of(GenreCreator.createValidGenre()));
+
     }
 
     @Test
-    @DisplayName("list should return list of anime when successful")
+    @DisplayName("list should return page of animes when successful")
     void findAll() {
         Page<Anime> animePage = animeService.list(PageRequest.of(0,1));
+
+        Assertions.assertThat(animePage).isNotNull();
+        Assertions.assertThat(animePage.toList()).isNotEmpty().hasSize(1);
+    }
+
+    @Test
+    @DisplayName("list with filters should return page of animes when successful")
+    void findAllWithFilters() {
+        AnimeListFilters filters = new AnimeListFilters();
+        Page<Anime> animePage = animeService.list(PageRequest.of(0,1), filters);
 
         Assertions.assertThat(animePage).isNotNull();
         Assertions.assertThat(animePage.toList()).isNotEmpty().hasSize(1);

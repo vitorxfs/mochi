@@ -7,6 +7,7 @@ import com.vitorsanches.mochi.modules.genre.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -19,8 +20,11 @@ public class AnimeService {
     private final AnimeRepository animeRepository;
     private final GenreService genreService;
 
-    public Page<Anime> list(Pageable pageable) {
-        return animeRepository.findAll(pageable);
+    public Page<Anime> list(Pageable pageable) { return animeRepository.findAll(pageable); }
+
+    public Page<Anime> list(Pageable pageable, AnimeListFilters filters) {
+        Specification<Anime> specification = AnimeSpecification.filterBy(filters);
+        return animeRepository.findAll(specification, pageable);
     }
 
     public Anime create(AnimeCreateDTO animeDto) {
