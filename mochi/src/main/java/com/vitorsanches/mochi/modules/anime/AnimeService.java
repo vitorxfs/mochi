@@ -2,6 +2,7 @@ package com.vitorsanches.mochi.modules.anime;
 
 import com.vitorsanches.mochi.exceptions.BadRequestException;
 import com.vitorsanches.mochi.modules.anime.dtos.AnimeCreateDTO;
+import com.vitorsanches.mochi.modules.anime.dtos.mappers.AnimeCreateMapper;
 import com.vitorsanches.mochi.modules.genre.Genre;
 import com.vitorsanches.mochi.modules.genre.GenreService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,8 @@ public class AnimeService {
     }
 
     public Anime create(AnimeCreateDTO animeDto) {
+        Anime anime = AnimeCreateMapper.toEntity(animeDto);
+
         List<Genre> genres = animeDto.getGenres().stream().map((Integer genreId) -> {
             Optional<Genre> genre = genreService.findById(Long.valueOf(genreId));
             if (genre.isEmpty()) {
@@ -36,13 +39,8 @@ public class AnimeService {
             return genre.get();
         }).toList();
 
-        Anime anime = Anime.builder()
-                .name(animeDto.getName())
-                .episodesCount(animeDto.getEpisodesCount())
-                .genres(new HashSet<Genre>(genres))
-                .score(0.0)
-                .reviewsCount(0)
-                .build();
+
+        anime.setGenres(new HashSet<Genre>(genres));
 
         return animeRepository.save(anime);
     }
