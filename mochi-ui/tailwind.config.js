@@ -19,6 +19,7 @@ export default {
         background: appTheme.backgroundColor,
         foreground: appTheme.foreground,
         border: appTheme.border,
+        inputbg: appTheme.inputBackgroundColor,
       }
     },
   },
