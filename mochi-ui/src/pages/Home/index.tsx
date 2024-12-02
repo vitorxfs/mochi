@@ -6,7 +6,7 @@ function Home() {
           <img src="/assets/logo.svg" alt="Homepage"/>
         </div>
         <div className="col-span-7">
-          <button>back</button>
+          <button className="font-icon">chevron_left</button>
         </div>
       </header>
 

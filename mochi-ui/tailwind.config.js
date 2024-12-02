@@ -11,7 +11,8 @@ export default {
       },
     },
     fontFamily: {
-      sans: ['Montserrat', 'sans-serif']
+      sans: ['Montserrat', 'sans-serif'],
+      icon: ['Material Symbols Outlined']
     },
     extend: {
       colors: {
