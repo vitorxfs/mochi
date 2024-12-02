@@ -1,29 +1,9 @@
-function Home() {
-  const handleBack = () => {
-    history.back();
-  }
+import Header from './components/Header';
 
+function Home() {
   return (
     <div className="container max-w-screen-2xl">
-      <header className="gap-8 grid grid-cols-10 h-28 items-center">
-        <div className="col-span-3 flex justify-center">
-          <img src="/assets/logo.svg" alt="Homepage"/>
-        </div>
-        <div className="col-span-7">
-          <button
-            className={`
-              font-icon
-              w-10 h-10 flex items-center justify-center
-              bg-inputbg border border-border
-              rounded-md`
-            }
-            aria-label="Go back"
-            onClick={handleBack}
-          >
-            chevron_left
-          </button>
-        </div>
-      </header>
+      <Header />
 
       <main className="gap-8 grid grid-cols-10">
         <div className="col-span-3">
