@@ -20,6 +20,12 @@ export default {
         foreground: appTheme.foreground,
         border: appTheme.border,
         inputbg: appTheme.inputBackgroundColor,
+        textcolor: appTheme.textColor,
+        textinverted: appTheme.textInverted,
+        'primary-0': appTheme.primary[0],
+        'primary-1': appTheme.primary[1],
+        'primary-2': appTheme.primary[2],
+        'primary-3': appTheme.primary[3],
       }
     },
   },

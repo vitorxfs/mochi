@@ -1,0 +1,10 @@
+.filter_content-container[data-expanded="true"] {
+  /* transform: scaleY(1); */
+  display: hidden;
+  transition: display 300ms;
+}
+
+.filter_content-container[data-expanded="false"] {
+  display: block;
+  transition: display 300ms;
+}

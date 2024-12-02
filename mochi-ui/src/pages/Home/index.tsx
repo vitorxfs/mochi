@@ -1,3 +1,4 @@
+import FiltersMenu from './components/FiltersMenu';
 import Header from './components/Header';
 
 function Home() {
@@ -7,7 +8,7 @@ function Home() {
 
       <main className="gap-8 grid grid-cols-10">
         <div className="col-span-3">
-           <h1 className="text-2xl">menu</h1>
+          <FiltersMenu />
         </div>
         <div className="col-span-7">
           <h1 className="text-2xl">Hello World</h1>
