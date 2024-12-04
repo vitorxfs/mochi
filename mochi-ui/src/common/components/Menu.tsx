@@ -36,13 +36,20 @@ export function Item({
         style={{ borderColor: color, color }}
       >
         <span>{name}</span>
-        <span className={`font-icon ${expanded ? 'rotate-0' : 'rotate-180'} transition-transform`} aria-hidden>
+        <span
+          className={`font-icon ${expanded ? 'rotate-0' : 'rotate-180'} transition-transform`}
+          aria-hidden
+        >
           keyboard_arrow_up
         </span>
       </button>
       <AnimatePresence>
         {expanded && (
-          <motion.div initial={{opacity: 0, height: 0}} animate={{opacity: 1, height: 'auto'}} exit={{opacity: 0, height: 0}}>
+          <motion.div
+            initial={{opacity: 0, height: 0}}
+            animate={{opacity: 1, height: 'auto'}}
+            exit={{opacity: 0, height: 0}}
+          >
             <div className="px-5 py-6">
               {children}
             </div>

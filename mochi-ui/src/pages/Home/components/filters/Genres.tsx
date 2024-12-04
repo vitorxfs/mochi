@@ -21,7 +21,7 @@ function GenresFilter() {
   return (
     <ul className="flex flex-wrap gap-2">
       {Object.keys(genres).map((genre) => (
-        <li>
+        <li key={genre}>
           <button
             onClick={() => handleToggleGenre(genre)}
             data-selected={genres[genre]}
